@@ -1,0 +1,55 @@
+﻿* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background-color: #050505; /* Very dark background */ color: #e0e0e0; /* Off-white text */ font-family: 'VT323', 'Courier New', monospace; /* Retro terminal font */ font-size: 1.1rem; line-height: 1.5; overflow-x: hidden; padding: 20px; }
+
+/* LAYOUT: Two Columns (Like Dimden) */
+.main-container { display: grid; grid-template-columns: 1fr 300px; /* Main content | Sidebar */ gap: 20px; max-width: 1200px; margin: 0 auto; }
+@media (max-width: 768px) { .main-container { grid-template-columns: 1fr; /* Stack on mobile */ } }
+
+/* --- COLORS (The "Dimden" Palette) --- */
+.color-green { color: #00ff41; text-shadow: 0 0 5px #00ff41; }
+.color-purple { color: #bf00ff; text-shadow: 0 0 5px #bf00ff; }
+.color-white { color: #e0e0e0; }
+
+/* --- TYPOGRAPHY --- */
+h1, h2, h3 { font-family: 'Press Start 2P', cursive; /* Pixel font for headers */ text-transform: uppercase; margin-bottom: 15px; }
+h1 { font-size: 2rem; color: #bf00ff; /* Purple main title */ text-shadow: 0 0 10px #bf00ff; }
+.section-title { font-size: 1.2rem; color: #00ff41; /* Green section headers */ border-bottom: 1px dashed #00ff41; padding-bottom: 5px; margin-top: 30px; }
+
+/* --- CARDS & WIDGETS --- */
+.card, .widget { background: rgba(20, 20, 20, 0.8); border: 1px solid #333; padding: 15px; margin-bottom: 20px; border-radius: 4px; box-shadow: 0 0 10px rgba(0, 255, 65, 0.1); /* Faint green glow */ }
+
+/* --- SIDEBAR WIDGETS --- */
+.widget-title { font-family: 'Press Start 2P', cursive; font-size: 0.8rem; color: #00ff41; margin-bottom: 10px; border-bottom: 1px solid #333; padding-bottom: 5px; }
+
+/* MOON WIDGET SPECIFIC */
+.moon-display { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.moon-icon { font-size: 2.5rem; color: #fff; }
+.moon-text { font-size: 0.9rem; }
+.moon-phase { color: #fff; font-weight: bold; }
+.moon-illum { color: #888; font-size: 0.8rem; }
+
+/* STATUS BARS */
+.status-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 5px; font-size: 0.9rem; }
+.bar { width: 60%; height: 8px; background: #333; border-radius: 2px; overflow: hidden; }
+.fill { height: 100%; background: #00ff41; box-shadow: 0 0 5px #00ff41; }
+
+/* LINKS IN SIDEBAR */
+.link-list { display: flex; flex-direction: column; gap: 8px; }
+.link-item { color: #bf00ff; text-decoration: none; font-size: 0.9rem; transition: 0.2s; }
+.link-item:hover { color: #fff; text-shadow: 0 0 5px #bf00ff; }
+
+/* --- NAVIGATION --- */
+.nav-grid { display: flex; gap: 10px; margin-top: 20px; }
+.nav-btn { background: #111; border: 1px solid #00ff41; color: #00ff41; padding: 8px 15px; text-decoration: none; font-family: 'VT323', monospace; font-size: 1.1rem; transition: 0.2s; }
+.nav-btn:hover { background: #00ff41; color: #000; box-shadow: 0 0 10px #00ff41; }
+
+/* --- TAGS --- */
+.tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.tag { font-size: 0.85rem; padding: 2px 8px; border: 1px solid #333; border-radius: 2px; background: #000; }
+
+/* --- BUTTONS --- */
+.button { display: inline-block; background: #bf00ff; color: #fff; padding: 10px 20px; text-decoration: none; font-family: 'Press Start 2P', cursive; font-size: 0.7rem; margin-top: 10px; border: none; cursor: pointer; transition: 0.2s; }
+.button:hover { background: #fff; color: #bf00ff; box-shadow: 0 0 15px #bf00ff; }
+
+/* --- AUDIO BUTTON (Preserved) --- */
+#rain-toggle { position: fixed; bottom: 20px; right: 20px; z-index: 1000; background: rgba(0, 0, 0, 0.8); border: 1px solid #00ff41; color: #00ff41; padding: 10px 15px; font-family: 'VT323', monospace; font-size: 1.1rem; cursor: pointer; box-shadow: 0 0 10px rgba(0, 255, 65, 0.3); transition: 0.2s; } #rain-toggle:hover { background: #00ff41; color: #000; } /* --- RAIN CANVAS --- */

@@ -1,0 +1,1249 @@
+﻿<!doctype html>
+
+<html class="dark" lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <title>JULIAN_QUEVEDO_V1.0</title>
+        <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=JetBrains+Mono:wght@400;500&family=Space+Mono:wght@400;700&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+            rel="stylesheet"
+        />
+        <script id="tailwind-config">
+            tailwind.config = {
+                darkMode: "class",
+                theme: {
+                    extend: {
+                        colors: {
+                            "secondary-fixed-dim": "#1e40af",
+                            "on-primary": "#e2e2e2",
+                            secondary: "#1e40af",
+                            "tertiary-fixed": "#ffe083",
+                            "surface-container-low": "#1a1c1c",
+                            "surface-container-highest": "#333535",
+                            "on-primary-fixed": "#1a1d22",
+                            "outline-variant": "#3d4148",
+                            "on-surface-variant": "#b0b5be",
+                            "on-tertiary-fixed-variant": "#574500",
+                            "surface-container-lowest": "#0c0f0f",
+                            "on-tertiary-fixed": "#231b00",
+                            "inverse-surface": "#e2e2e2",
+                            "on-secondary-fixed-variant": "#1e3a8a",
+                            "inverse-on-surface": "#2f3131",
+                            "on-secondary": "#ffffff",
+                            "on-error": "#690005",
+                            "primary-container": "#3d4148",
+                            "surface-variant": "#333535",
+                            "surface-tint": "#8a909a",
+                            "surface-dim": "#121414",
+                            background: "#000000",
+                            "primary-fixed": "#c8cdd5",
+                            outline: "#6b7280",
+                            "on-error-container": "#ffdad6",
+                            "secondary-fixed": "#3b82f6",
+                            "tertiary-fixed-dim": "#eec200",
+                            "on-secondary-container": "#dbeafe",
+                            "surface-bright": "#37393a",
+                            "on-tertiary": "#3c2f00",
+                            "inverse-primary": "#2d3138",
+                            "error-container": "#93000a",
+                            "on-primary-fixed-variant": "#3d4148",
+                            primary: "#525866",
+                            "on-tertiary-container": "#4e3e00",
+                            "primary-fixed-dim": "#8a909a",
+                            "on-background": "#e2e2e2",
+                            surface: "#121414",
+                            "surface-container": "#1e2020",
+                            "on-surface": "#e2e2e2",
+                            "on-secondary-fixed": "#1e3a8a",
+                            "on-primary-container": "#1a1d22",
+                            tertiary: "#efc200",
+                            "secondary-container": "#1e40af",
+                            "tertiary-container": "#cea700",
+                            error: "#ffb4ab",
+                            "surface-container-high": "#282a2b",
+                            "brand-blue": "#1e40af",
+                        },
+                        borderRadius: {
+                            DEFAULT: "0px",
+                            lg: "0px",
+                            xl: "0px",
+                            full: "0px",
+                        },
+                        spacing: {
+                            gutter: "16px",
+                            "container-max-width": "1100px",
+                            unit: "4px",
+                            "window-padding": "20px",
+                            margin: "24px",
+                        },
+                        fontFamily: {
+                            "headline-lg-mobile": ["Space Grotesk"],
+                            "display-lg": ["Space Grotesk"],
+                            "body-sm": ["JetBrains Mono"],
+                            "body-md": ["JetBrains Mono"],
+                            "code-inline": ["JetBrains Mono"],
+                            "headline-lg": ["Space Grotesk"],
+                            "label-caps": ["Space Mono"],
+                        },
+                    },
+                },
+            };
+        </script>
+        <style>
+            body {
+                background-color: #000000;
+                background-image: url('bg.png');
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center top;
+                background-attachment: fixed;
+                color: #1e40af;
+                overflow-x: hidden;
+                font-family: "JetBrains Mono", monospace;
+                cursor: crosshair;
+            }
+
+            /* Subdued CRT Vibration Effect */
+            @keyframes crt-vibrate {
+                0%,
+                95% {
+                    transform: translate(0, 0);
+                }
+                96% {
+                    transform: translate(-0.5px, 0.5px);
+                }
+                97% {
+                    transform: translate(0.5px, -0.5px);
+                }
+                98% {
+                    transform: translate(0.5px, 0.5px);
+                }
+                100% {
+                    transform: translate(0, 0);
+                }
+            }
+
+            .crt-text-vibrate {
+                animation: crt-vibrate 4s infinite;
+                text-shadow:
+                    1px 0 1px rgba(168, 85, 247, 0.2),
+                    -1px 0 1px rgba(30, 64, 175, 0.2);
+            }
+
+            /* Neon Pulse Effect */
+            @keyframes neon-pulse {
+                0%,
+                100% {
+                    opacity: 1;
+                    text-shadow: 0 0 6px rgba(82,88,102,0.6);
+                    color: #6b7280;
+                }
+                50% {
+                    opacity: 0.85;
+                    text-shadow: 0 0 4px rgba(30,64,175,0.5);
+                    color: #1e40af;
+                }
+            }
+
+            .neon-pulse {
+                animation: neon-pulse 3s infinite ease-in-out;
+                display: inline-block;
+            }
+
+            .terminal-window {
+                border: 1px solid #525866;
+                position: relative;
+                background: rgba(0, 0, 0, 0.98);
+            }
+
+            .hard-shadow {
+                box-shadow: 8px 8px 0px #525866;
+            }
+
+            .scanline {
+                width: 100%;
+                height: 2px;
+                background: rgba(30, 64, 175, 0.05);
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: 100;
+                pointer-events: none;
+                animation: scanline 10s linear infinite;
+            }
+
+            @keyframes scanline {
+                0% {
+                    top: 0;
+                }
+                100% {
+                    top: 100%;
+                }
+            }
+
+            .cursor-blink {
+                display: inline-block;
+                width: 8px;
+                height: 1.2em;
+                background-color: #1e40af;
+                animation: blink 1s step-end infinite;
+                vertical-align: middle;
+            }
+
+            @keyframes blink {
+                50% {
+                    opacity: 0;
+                }
+            }
+
+            .ascii-divider {
+                border-bottom: 1px dashed #525866;
+                width: 100%;
+                margin: 1.5rem 0;
+                opacity: 0.5;
+            }
+
+            .widget-panel {
+                border: 1px solid #525866;
+                background: rgba(10, 10, 20, 0.85);
+                padding: 12px;
+            }
+
+            .hello-world {
+                position: fixed;
+                bottom: 5px;
+                left: 5px;
+                font-size: 10px;
+                opacity: 0.3;
+                font-family: "Space Mono", monospace;
+                z-index: 99;
+            }
+
+            #bg-shader-container {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: -1;
+                pointer-events: none;
+            }
+
+            .moon-stats-grid {
+                display: grid;
+                grid-template-columns: auto 1fr;
+                gap: 2px 12px;
+                font-size: 10px;
+                font-family: "JetBrains Mono", monospace;
+            }
+
+            .stat-label {
+                color: #ffffff;
+                opacity: 0.9;
+            }
+            .stat-value {
+                color: #facc15;
+            }
+        </style>
+    </head>
+    <body class="flex flex-col min-h-screen">
+        <div class="scanline"></div>
+        <div id="bg-shader-container">
+            <!-- STITCH_SHADER_START:ANIMATION_37 class="" -->
+            <div
+                class=""
+                style="
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                    min-height: 200px;
+                "
+            >
+                <canvas
+                    id="shader-canvas-ANIMATION_37"
+                    style="display: block; width: 100%; height: 100%"
+                ></canvas>
+                <script>
+                    (function () {
+                        const canvas = document.getElementById(
+                            "shader-canvas-ANIMATION_37",
+                        );
+
+                        // Sync the WebGL drawing-buffer size with the CSS-driven layout size.
+                        // This fires on initial layout and whenever the element is resized.
+                        function syncSize() {
+                            const w = canvas.clientWidth || 1280;
+                            const h = canvas.clientHeight || 720;
+                            if (canvas.width !== w || canvas.height !== h) {
+                                canvas.width = w;
+                                canvas.height = h;
+                            }
+                        }
+                        if (typeof ResizeObserver !== "undefined") {
+                            new ResizeObserver(syncSize).observe(canvas);
+                        }
+                        syncSize();
+
+                        const gl =
+                            canvas.getContext("webgl", { alpha: true, premultipliedAlpha: false }) ||
+                            canvas.getContext("experimental-webgl", { alpha: true, premultipliedAlpha: false });
+                        if (!gl) return;
+                        const vs = `attribute vec2 a_position;
+varying vec2 v_texCoord;
+void main() {
+  v_texCoord = a_position * 0.5 + 0.5;
+  gl_Position = vec4(a_position, 0.0, 1.0);
+}`;
+                        const fs = `precision highp float;
+varying vec2 v_texCoord;
+uniform float u_time;
+uniform vec2 u_resolution;
+
+float hash(vec2 p) {
+    return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
+}
+
+void main() {
+    vec2 uv = v_texCoord;
+
+    // Vertical falling rain
+    vec2 rainUV = uv;
+    rainUV.y += u_time * 1.8;
+
+    // Denser grid for thinner, more numerous drops
+    vec2 grid = vec2(130.0, 30.0);
+    vec2 ipos = floor(rainUV * grid);
+    vec2 fpos = fract(rainUV * grid);
+
+    float h = hash(ipos);
+    float drop = 0.0;
+
+    // More drops, thinner lines
+    if (h > 0.85) {
+        float center = 0.5;
+        float line = smoothstep(0.05, 0.0, abs(fpos.x - center));
+        float fade = smoothstep(0.0, 0.25, fpos.y) * smoothstep(1.0, 0.65, fpos.y);
+        drop = line * fade * h;
+    }
+
+    // Tiny splashes at the bottom
+    float splash = 0.0;
+    if (uv.y < 0.04) {
+        float sHash = hash(vec2(floor(uv.x * 70.0), floor(u_time * 15.0)));
+        if (sHash > 0.86) {
+            vec2 sPos = fract(vec2(uv.x * 70.0, uv.y * 25.0));
+            splash = smoothstep(0.35, 0.0, length(sPos - 0.5)) * sHash;
+        }
+    }
+
+    // Gradient: soft blue-white at top of drop, white at bottom (like dimden)
+    vec3 topColor    = vec3(0.55, 0.72, 1.0);   // #8cb8ff — light blue
+    vec3 bottomColor = vec3(0.92, 0.94, 0.97);  // near white
+    vec3 dropColor   = mix(topColor, bottomColor, fpos.y);
+
+    vec3 rainColor = dropColor * (drop + splash);
+
+    // Very faint grey-white mist, barely visible
+    float mist = hash(uv + u_time * 0.008) * 0.025;
+    rainColor += vec3(0.65, 0.68, 0.72) * mist;
+
+    float alpha = clamp((drop + splash) * 5.5 + mist * 1.5, 0.0, 0.88);
+    gl_FragColor = vec4(rainColor, alpha);
+}`;
+                        function cs(type, src) {
+                            const s = gl.createShader(type);
+                            gl.shaderSource(s, src);
+                            gl.compileShader(s);
+                            return s;
+                        }
+                        const prog = gl.createProgram();
+                        gl.attachShader(prog, cs(gl.VERTEX_SHADER, vs));
+                        gl.attachShader(prog, cs(gl.FRAGMENT_SHADER, fs));
+                        gl.linkProgram(prog);
+                        gl.useProgram(prog);
+                        const buf = gl.createBuffer();
+                        gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+                        gl.bufferData(
+                            gl.ARRAY_BUFFER,
+                            new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]),
+                            gl.STATIC_DRAW,
+                        );
+                        const pos = gl.getAttribLocation(prog, "a_position");
+                        gl.enableVertexAttribArray(pos);
+                        gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+                        const uTime = gl.getUniformLocation(prog, "u_time");
+                        const uRes = gl.getUniformLocation(
+                            prog,
+                            "u_resolution",
+                        );
+                        const uMouse = gl.getUniformLocation(prog, "u_mouse");
+
+                        // u_mouse is in pixel coordinates matching u_resolution (ShaderToy convention).
+                        // Shaders that need normalized coords should use: u_mouse / u_resolution.
+                        let mouse = {
+                            x: canvas.width / 2,
+                            y: canvas.height / 2,
+                        };
+                        window.addEventListener("mousemove", (event) => {
+                            const rect = canvas.getBoundingClientRect();
+                            if (rect.width && rect.height) {
+                                const nx =
+                                    (event.clientX - rect.left) / rect.width;
+                                const ny =
+                                    1.0 -
+                                    (event.clientY - rect.top) / rect.height;
+                                mouse.x = nx * canvas.width;
+                                mouse.y = ny * canvas.height;
+                            }
+                        });
+
+                        function render(t) {
+                            if (typeof ResizeObserver === "undefined")
+                                syncSize();
+                            gl.viewport(0, 0, canvas.width, canvas.height);
+                            if (uTime) gl.uniform1f(uTime, t * 0.001);
+                            if (uRes)
+                                gl.uniform2f(uRes, canvas.width, canvas.height);
+                            if (uMouse) gl.uniform2f(uMouse, mouse.x, mouse.y);
+                            gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+                            requestAnimationFrame(render);
+                        }
+                        render(0);
+                    })();
+                </script>
+            </div>
+            <!-- STITCH_SHADER_END:ANIMATION_37 -->
+        </div>
+        <!-- Top Navigation Bar -->
+        <header
+            class="bg-black/80 text-brand-blue font-body-md w-full border-b border-primary/40 z-40 sticky top-0 backdrop-blur-sm"
+        >
+            <div
+                class="flex justify-between items-center px-window-padding h-14 w-full max-w-container-max-width mx-auto"
+            >
+                <div class="flex items-center gap-4">
+                    <div
+                        class="font-headline-lg-mobile text-headline-lg-mobile text-primary uppercase tracking-tighter crt-text-vibrate"
+                    >
+                        JULIAN_QUEVEDO_V1.0
+                    </div>
+                    <span class="neon-pulse text-lg hidden sm:block"
+                        >あきらめない</span
+                    >
+                </div>
+                <nav class="hidden md:flex gap-8">
+                    <a
+                        class="text-brand-blue border-b-2 border-brand-blue pb-1 hover:text-primary transition-colors crt-text-vibrate"
+                        href="#"
+                        >HOME</a
+                    >
+                    <a
+                        class="text-primary/70 hover:text-brand-blue transition-colors crt-text-vibrate"
+                        href="#projects"
+                        >PROJECTS</a
+                    >
+                    <a
+                        class="text-primary/70 hover:text-brand-blue transition-colors crt-text-vibrate"
+                        href="mailto:julian.quevedo.houston@gmail.com"
+                        >EMAIL_ME</a
+                    >
+                </nav>
+                <div class="flex items-center gap-6">
+                    <button
+                        class="flex items-center gap-2 border border-primary px-2 py-1 hover:bg-primary hover:text-on-primary transition-colors active:translate-x-0.5 active:translate-y-0.5"
+                        id="audio-toggle"
+                    >
+                        <span class="material-symbols-outlined text-[18px]"
+                            >volume_up</span
+                        >
+                        <span
+                            class="font-label-caps text-label-caps crt-text-vibrate uppercase"
+                            >Sound_On</span
+                        >
+                    </button>
+                </div>
+            </div>
+        </header>
+        <main
+            class="flex-grow w-full max-w-container-max-width mx-auto px-gutter py-12 relative z-10"
+        >
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- Main Content Area (8 cols) -->
+                <div class="lg:col-span-8 space-y-8">
+                    <div
+                        class="terminal-window hard-shadow w-full flex flex-col"
+                    >
+                        <div
+                            class="flex justify-between items-center bg-primary text-on-primary px-4 py-1.5 border-b border-primary"
+                        >
+                            <span
+                                class="font-label-caps text-[11px] crt-text-vibrate"
+                                >C:\USERS\QUEVEDO\ABOUT_ME.EXE</span
+                            >
+                            <div class="flex gap-4 opacity-80">
+                                <span
+                                    class="font-label-caps text-label-caps cursor-pointer hover:opacity-100"
+                                    >[ _ ]</span
+                                >
+                                <span
+                                    class="font-label-caps text-label-caps cursor-pointer hover:opacity-100"
+                                    >[ □ ]</span
+                                >
+                                <span
+                                    class="font-label-caps text-label-caps cursor-pointer hover:opacity-100"
+                                    >[ X ]</span
+                                >
+                            </div>
+                        </div>
+                        <div class="p-window-padding space-y-10">
+                            <section>
+                                <h1
+                                    class="font-display-lg font-bold text-[42px] leading-none mb-4 text-brand-blue neon-pulse"
+                                >
+                                    opǝʌǝnb uɐılnɾ
+                                </h1>
+                                <p
+                                    class="font-body-md font-medium text-body-md opacity-80 text-primary"
+                                >
+                                    MARTIAL ARTIST | DEVELOPER | STUDENT
+                                </p>
+                                <div class="ascii-divider"></div>
+                            </section>
+                            <!-- Personal Background -->
+                            <section class="space-y-4">
+                                <div class="flex items-center gap-2">
+                                    <span
+                                        class="text-brand-blue font-headline-lg font-bold text-lg uppercase"
+                                        >[Who_Am_I?]</span
+                                    >
+                                    <div
+                                        class="h-[1px] flex-grow bg-primary opacity-20"
+                                    ></div>
+                                </div>
+                                <div
+                                    class="font-body-md text-body-md leading-relaxed text-primary/90 space-y-4"
+                                >
+                                    <p>
+                                        Julian Quevedo | Martial Artist ·
+                                        Developer · Student. I train and teach
+                                        Brazilian Jiu-Jitsu and hold a Gracie
+                                        combatant belt recognition. I also have
+                                        multi-discipline striking experience in
+                                        Muay Thai and boxing. I apply the same
+                                        discipline I use on the mats to building
+                                        software and automation.
+                                    </p>
+                                    <p>
+                                        This summer I'm preparing to build and
+                                        deploy a landing page for a
+                                        sparring-robot startup (pending
+                                        approval), completing CS50 coursework,
+                                        and studying for the SAT. I attend
+                                        Cypress Ridge High School and plan to
+                                        major in Computer Science with a Finance
+                                        minor or pursue Financial Engineering. I
+                                        focus on frontend work (HTML/CSS),
+                                        Python for automation, and systems
+                                        thinking for product and fintech
+                                        projects. I ship measurable projects and
+                                        document them publicly (GitHub, demo
+                                        videos).
+                                        <span class="cursor-blink"></span>
+                                    </p>
+                                </div>
+                            </section>
+                            <!-- Academic Path & College Goals -->
+                            <section class="space-y-4">
+                                <div class="flex items-center gap-2">
+                                    <span
+                                        class="text-brand-blue font-headline-lg font-bold text-lg uppercase"
+                                        >[The_School_Grind]</span
+                                    >
+                                    <div
+                                        class="h-[1px] flex-grow bg-primary opacity-20"
+                                    ></div>
+                                </div>
+                                <div
+                                    class="grid grid-cols-1 md:grid-cols-2 gap-6"
+                                >
+                                    <div
+                                        class="border-2 border-dashed border-primary/30 p-4 bg-black/20 translate-x-1 -translate-y-1"
+                                    >
+                                        <h3
+                                            class="font-headline-lg font-bold text-brand-blue mb-2 text-[14px] uppercase"
+                                        >
+                                            Current Status
+                                        </h3>
+                                        <p
+                                            class="font-body-sm text-[13px] text-primary/80"
+                                        >
+                                            Currently pushing through my classes
+                                            at Cypress Ridge HS. Keeping my
+                                            focus sharp on the technical
+                                            fundamentals and staying disciplined
+                                            with my study habits.
+                                        </p>
+                                    </div>
+                                    <div
+                                        class="border border-solid border-primary/40 p-4 bg-black/40 shadow-[4px_4px_0px_rgba(168,85,247,0.2)]"
+                                    >
+                                        <h3
+                                            class="font-headline-lg font-bold text-brand-blue mb-2 text-[14px] uppercase"
+                                        >
+                                            Next Level
+                                        </h3>
+                                        <p
+                                            class="font-body-sm text-[13px] text-primary/80"
+                                        >
+                                            I'm aiming for a CS degree mixed
+                                            with a Finance minor. Looking for a
+                                            place where I can combine technical
+                                            execution with some actual
+                                            innovative thinking.
+                                        </p>
+                                    </div>
+                                </div>
+                            </section>
+                            <!-- Career Interests & Skills -->
+                            <section class="space-y-4">
+                                <div class="flex items-center gap-2">
+                                    <span
+                                        class="text-brand-blue font-headline-lg font-bold text-lg uppercase"
+                                        >[My_Toolkit]</span
+                                    >
+                                    <div
+                                        class="h-[1px] flex-grow bg-primary opacity-20"
+                                    ></div>
+                                </div>
+                                <div
+                                    class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-black/30 p-4 border border-primary/10"
+                                >
+                                    <div class="space-y-3">
+                                        <h3
+                                            class="font-headline-lg text-brand-blue text-[14px] font-bold uppercase"
+                                        >
+                                            What I do
+                                        </h3>
+                                        <ul
+                                            class="font-body-sm text-[13px] text-primary/80 list-none space-y-1"
+                                        >
+                                            <li>
+                                                &gt; Gracie combatant belt
+                                                recognition (BJJ &amp; Striking)
+                                            </li>
+                                            <li>
+                                                &gt; Frontend Development
+                                                (Startup Landing Page)
+                                            </li>
+                                            <li>
+                                                &gt; CS50 Coursework (Harvard)
+                                            </li>
+                                            <li>
+                                                &gt; Personal Projects (Budget
+                                                App)
+                                            </li>
+                                            <li>
+                                                &gt; Academic Focus (CS Major /
+                                                Finance Minor)
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="space-y-3">
+                                        <h3
+                                            class="font-headline-lg text-brand-blue text-[14px] font-bold uppercase"
+                                        >
+                                            Academic Path &amp; Details
+                                        </h3>
+                                        <ul
+                                            class="font-body-sm text-[13px] text-primary/80 list-none space-y-1"
+                                        >
+                                            <li>
+                                                &gt; CS1 K -&gt; CS2 AP
+                                                progression
+                                            </li>
+                                            <li>
+                                                &gt; Financial Engineering
+                                                interests
+                                            </li>
+                                            <li>
+                                                &gt; Shipping measurable
+                                                projects
+                                            </li>
+                                            <li>
+                                                &gt; Public documentation
+                                                (GitHub/Demos)
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </section>
+                            <!-- Cool Sites Section -->
+                            <section class="space-y-4 pb-4">
+                                <div class="flex items-center gap-2">
+                                    <span
+                                        class="text-brand-blue font-headline-lg font-bold text-lg uppercase"
+                                        >[Cool_Links]</span
+                                    >
+                                    <div
+                                        class="h-[1px] flex-grow bg-primary opacity-20"
+                                    ></div>
+                                </div>
+                                <div class="flex flex-wrap gap-3">
+                                    <a
+                                        class="w-[88px] h-[31px] border border-solid border-brand-blue flex items-center justify-center text-[10px] text-primary hover:bg-brand-blue hover:text-white transition-all"
+                                        href="https://geoguessr.com"
+                                        target="_blank"
+                                        title="Explore the world"
+                                        >GeoGuessr</a
+                                    >
+                                    <a
+                                        class="w-[88px] h-[31px] border border-dashed border-primary flex items-center justify-center text-[10px] text-primary hover:bg-primary hover:text-black transition-all"
+                                        href="https://neal.fun"
+                                        target="_blank"
+                                        title="Quirky web toys"
+                                        >Neal.fun</a
+                                    >
+                                    <a
+                                        class="w-[88px] h-[31px] border border-solid border-brand-blue flex items-center justify-center text-[10px] text-primary hover:bg-brand-blue hover:text-white transition-all"
+                                        href="https://theuselessweb.com"
+                                        target="_blank"
+                                        title="Boredom killer"
+                                        >UselessWeb</a
+                                    >
+                                    <a
+                                        class="w-[88px] h-[31px] border border-dotted border-primary flex items-center justify-center text-[10px] text-primary hover:bg-primary hover:text-black transition-all"
+                                        href="https://findtheinvisiblecow.com"
+                                        target="_blank"
+                                        title="Hide and seek"
+                                        >InvisCow</a
+                                    >
+                                    <a
+                                        class="w-[88px] h-[31px] border border-solid border-brand-blue flex items-center justify-center text-[10px] text-primary hover:bg-brand-blue hover:text-white transition-all"
+                                        href="https://asoftmurmur.com"
+                                        target="_blank"
+                                        title="Ambient noise"
+                                        >SoftMurmur</a
+                                    >
+                                    <a
+                                        class="w-[88px] h-[31px] border border-dashed border-primary flex items-center justify-center text-[10px] text-primary hover:bg-primary hover:text-black transition-all"
+                                        href="https://thisissand.com"
+                                        target="_blank"
+                                        title="Digital sand art"
+                                        >ThisIsSand</a
+                                    >
+                                    <a
+                                        class="w-[88px] h-[31px] border border-solid border-brand-blue flex items-center justify-center text-[10px] text-primary hover:bg-brand-blue hover:text-white transition-all"
+                                        href="https://radio.garden"
+                                        target="_blank"
+                                        title="Global radio"
+                                        >Radio.Garden</a
+                                    >
+                                    <a
+                                        class="w-[88px] h-[31px] border border-dotted border-primary flex items-center justify-center text-[10px] text-primary hover:bg-primary hover:text-black transition-all"
+                                        href="https://www.sporcle.com"
+                                        target="_blank"
+                                        title="Trivia site"
+                                        >Sporcle</a
+                                    >
+                                    <a
+                                        class="w-[88px] h-[31px] border border-solid border-brand-blue flex items-center justify-center text-[10px] text-primary hover:bg-brand-blue hover:text-white transition-all"
+                                        href="https://littlealchemy2.com"
+                                        target="_blank"
+                                        title="Combine elements"
+                                        >Alchemy 2</a
+                                    >
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+                <!-- Side Widgets (4 cols) -->
+                <div class="lg:col-span-4 space-y-6">
+                    <!-- System Info -->
+                    <div class="widget-panel">
+                        <div
+                            class="flex items-center gap-2 mb-3 border-b border-primary/30 pb-1"
+                        >
+                            <span class="material-symbols-outlined text-[16px]"
+                                >info</span
+                            >
+                            <span
+                                class="font-label-caps text-[11px] crt-text-vibrate uppercase"
+                                >Sys_Info</span
+                            >
+                        </div>
+                        <div class="space-y-2 font-body-sm text-[12px]">
+                            <div class="flex justify-between opacity-80">
+                                <span class="crt-text-vibrate uppercase"
+                                    >OS:</span
+                                >
+                                <span class="text-brand-blue crt-text-vibrate"
+                                    >QUEVEDO_OS_V1.5</span
+                                >
+                            </div>
+                            <div class="flex justify-between opacity-80">
+                                <span class="crt-text-vibrate uppercase"
+                                    >Uptime:</span
+                                >
+                                <span class="crt-text-vibrate">248:12:04</span>
+                            </div>
+                            <div class="flex justify-between opacity-80">
+                                <span class="crt-text-vibrate uppercase"
+                                    >CPU_Load:</span
+                                >
+                                <span class="text-brand-blue crt-text-vibrate"
+                                    >12.4%</span
+                                >
+                            </div>
+                            <div class="flex justify-between opacity-80">
+                                <span class="crt-text-vibrate uppercase"
+                                    >Instagram:</span
+                                >
+                                <a
+                                    class="text-brand-blue hover:underline crt-text-vibrate"
+                                    href="https://instagram.com/jscurse"
+                                    target="_blank"
+                                    >@jscurse</a
+                                >
+                            </div>
+                            <div class="flex justify-between opacity-80">
+                                <span class="crt-text-vibrate uppercase"
+                                    >GitHub:</span
+                                >
+                                <a
+                                    class="text-brand-blue hover:underline crt-text-vibrate"
+                                    href="https://github.com/cashredo/julianq.dev"
+                                    target="_blank"
+                                    >cashredo</a
+                                >
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Dream Travel Place -->
+                    <div class="widget-panel">
+                        <div
+                            class="flex items-center gap-2 mb-3 border-b border-primary/30 pb-1"
+                        >
+                            <span class="material-symbols-outlined text-[16px]"
+                                >landscape</span
+                            >
+                            <span
+                                class="font-label-caps text-[11px] crt-text-vibrate uppercase"
+                                >Dream_Travel</span
+                            >
+                        </div>
+                        <div
+                            class="space-y-2 font-body-sm text-[11px] opacity-80"
+                        >
+                            <img
+                                alt="Dream Travel Place"
+                                class="w-full h-auto border border-primary/40 grayscale hover:grayscale-0 transition-all duration-300"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDL3dXoShU6Q8NiopY5sCTUBJz3QodiF_mqBJKRw6PI_LVIJEw-2-t1Kfw3nT0QfD3DFB2bk1MoErIQDegGEpRywg1DN7gXE6pH48afro8rriBN8mBKdB04piroMquKoGXy9Vm8hKaw8xR_BUDGxWNoVk5r55C7nh7i2x6Yl3bZDrF9OyKsfHOoyCLTasMF34lZ9cYu8XFmhIlxhMtb_DMm08XgpfO4SxTla9nuRsoBbqYkvhaJ5bqHhX1n-IEvnMZAYnXk5kW2kJc"
+                            />
+                            <p
+                                class="crt-text-vibrate text-center text-brand-blue uppercase mt-1"
+                            >
+                                Patagonia, CL
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Moon Widget -->
+                    <div class="widget-panel">
+                        <div
+                            class="flex items-center gap-2 mb-3 border-b border-primary/30 pb-1"
+                        >
+                            <span class="material-symbols-outlined text-[16px]"
+                                >nightlight</span
+                            >
+                            <span
+                                class="font-label-caps text-[11px] crt-text-vibrate uppercase"
+                                >Celestial_Data</span
+                            >
+                        </div>
+                        <div
+                            class="relative flex flex-col gap-1 bg-black/60 p-2"
+                        >
+                            <div
+                                class="flex justify-between w-full items-start mb-2"
+                            >
+                                <span
+                                    class="text-[10px] text-yellow-400 opacity-80"
+                                    >+</span
+                                >
+                                <div class="flex gap-2 items-start">
+                                    <div
+                                        class="w-8 h-8 flex items-center justify-center overflow-hidden"
+                                    >
+                                        <svg
+                                            height="32"
+                                            viewbox="0 0 32 32"
+                                            width="32"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <path
+                                                d="M16 2 A 14 14 0 0 1 16 30 A 10 14 0 0 0 16 2 Z"
+                                                fill="#e2e2e2"
+                                            ></path>
+                                        </svg>
+                                    </div>
+                                    <a
+                                        class="text-yellow-400 hover:text-white text-[12px] font-bold crt-text-vibrate"
+                                        href="https://en.wikipedia.org/wiki/Lunar_phase"
+                                        target="_blank"
+                                        >?</a
+                                    >
+                                </div>
+                            </div>
+                            <div class="moon-stats-grid w-full">
+                                <span class="stat-label crt-text-vibrate"
+                                    >Phase:</span
+                                >
+                                <span class="stat-value crt-text-vibrate"
+                                    >Waxing Crescent</span
+                                >
+                                <span class="stat-label crt-text-vibrate"
+                                    >Azimuth:</span
+                                >
+                                <span class="stat-value crt-text-vibrate"
+                                    >211° 42' ∅</span
+                                >
+                                <span class="stat-label crt-text-vibrate"
+                                    >Altitude:</span
+                                >
+                                <span class="stat-value crt-text-vibrate"
+                                    >68° 04' ▾</span
+                                >
+                                <span class="stat-label crt-text-vibrate"
+                                    >Texas:</span
+                                >
+                                <span
+                                    class="stat-value crt-text-vibrate"
+                                    id="texas-time"
+                                    >TX: --:--:--</span
+                                >
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Combat & Stats -->
+                    <div class="widget-panel">
+                        <div
+                            class="flex items-center gap-2 mb-3 border-b border-primary/30 pb-1"
+                        >
+                            <span class="material-symbols-outlined text-[16px]"
+                                >fitness_center</span
+                            >
+                            <span
+                                class="font-label-caps text-[11px] crt-text-vibrate uppercase"
+                                >Martial_Data</span
+                            >
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex flex-col gap-1">
+                                <div
+                                    class="flex justify-between text-[11px] opacity-70"
+                                >
+                                    <span class="crt-text-vibrate uppercase"
+                                        >Jiu-Jitsu</span
+                                    >
+                                    <span class="crt-text-vibrate">100%</span>
+                                </div>
+                                <div
+                                    class="h-1.5 w-full bg-primary/10 border border-primary/20"
+                                >
+                                    <div
+                                        class="h-full bg-brand-blue w-[100%]"
+                                    ></div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col gap-1">
+                                <div
+                                    class="flex justify-between text-[11px] opacity-70"
+                                >
+                                    <span class="crt-text-vibrate uppercase"
+                                        >Muay Thai</span
+                                    >
+                                    <span class="crt-text-vibrate">85%</span>
+                                </div>
+                                <div
+                                    class="h-1.5 w-full bg-primary/10 border border-primary/20"
+                                >
+                                    <div
+                                        class="h-full bg-brand-blue w-[85%]"
+                                    ></div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col gap-1">
+                                <div
+                                    class="flex justify-between text-[11px] opacity-70"
+                                >
+                                    <span class="crt-text-vibrate uppercase"
+                                        >Finance / Markets</span
+                                    >
+                                    <span class="crt-text-vibrate">70%</span>
+                                </div>
+                                <div
+                                    class="h-1.5 w-full bg-primary/10 border border-primary/20"
+                                >
+                                    <div
+                                        class="h-full bg-brand-blue w-[70%]"
+                                    ></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Rotating Quote -->
+                    <div class="widget-panel">
+                        <div class="flex items-center gap-2 mb-3 border-b border-primary/30 pb-1">
+                            <span class="material-symbols-outlined text-[16px]">format_quote</span>
+                            <span class="font-label-caps text-[11px] crt-text-vibrate uppercase">Daily_Quote</span>
+                        </div>
+                        <div class="space-y-2">
+                            <p id="quote-text" class="font-body-sm text-[12px] text-on-surface/80 leading-relaxed italic crt-text-vibrate transition-opacity duration-700"></p>
+                            <p id="quote-author" class="font-label-caps text-[10px] text-brand-blue crt-text-vibrate text-right mt-2"></p>
+                        </div>
+                    </div>
+                    <!-- Market Ticker -->
+                    <div class="widget-panel">
+                        <div class="flex items-center gap-2 mb-3 border-b border-primary/30 pb-1">
+                            <span class="material-symbols-outlined text-[16px]">candlestick_chart</span>
+                            <span class="font-label-caps text-[11px] crt-text-vibrate uppercase">Market_Feed</span>
+                        </div>
+                        <div class="space-y-3 font-body-sm text-[12px]">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <span class="text-on-surface/60 crt-text-vibrate uppercase text-[10px]">NVDA</span>
+                                    <span class="text-on-surface/40 text-[9px] block">Nvidia Corp</span>
+                                </div>
+                                <div class="text-right">
+                                    <span id="nvda-price" class="text-brand-blue crt-text-vibrate block">---.--</span>
+                                    <span id="nvda-change" class="text-[10px] crt-text-vibrate">--</span>
+                                </div>
+                            </div>
+                            <div class="h-[1px] bg-primary/10"></div>
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <span class="text-on-surface/60 crt-text-vibrate uppercase text-[10px]">IAU</span>
+                                    <span class="text-on-surface/40 text-[9px] block">iShares Gold Trust</span>
+                                </div>
+                                <div class="text-right">
+                                    <span id="iau-price" class="text-brand-blue crt-text-vibrate block">---.--</span>
+                                    <span id="iau-change" class="text-[10px] crt-text-vibrate">--</span>
+                                </div>
+                            </div>
+                            <p id="ticker-timestamp" class="text-[9px] opacity-30 crt-text-vibrate text-right mt-1">updating...</p>
+                        </div>
+                    </div>
+                    <!-- Webrings -->
+                    <div class="widget-panel">
+                        <div
+                            class="font-label-caps text-[11px] mb-3 opacity-50 crt-text-vibrate uppercase"
+                        >
+                            External_Nodes
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <button
+                                class="border border-primary/40 px-2 py-1 text-[10px] hover:bg-brand-blue hover:text-white transition-colors crt-text-vibrate uppercase"
+                            >
+                                Webring_01
+                            </button>
+                            <button
+                                class="border border-primary/40 px-2 py-1 text-[10px] hover:bg-brand-blue hover:text-white transition-colors crt-text-vibrate uppercase"
+                            >
+                                Texas_Dev_Hub
+                            </button>
+                            <button
+                                class="border border-primary/40 px-2 py-1 text-[10px] hover:bg-brand-blue hover:text-white transition-colors crt-text-vibrate uppercase"
+                            >
+                                BJJ_Cert
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <div
+            class="fixed bottom-2 right-4 text-[8px] opacity-30 text-primary font-mono crt-text-vibrate z-50 leading-tight"
+        >
+            /\_/\<br />( o.o )<br />
+            &gt; ^ &lt;<br />meow_
+        </div>
+        <div class="hello-world">hello world</div>
+        <!-- Footer -->
+        <footer
+            class="bg-black text-brand-blue font-label-caps text-[11px] w-full border-t border-primary/30 mt-auto py-4"
+        >
+            <div
+                class="flex justify-between items-center px-window-padding w-full max-w-container-max-width mx-auto"
+            >
+                <div class="flex gap-4">
+                    <span class="crt-text-vibrate"
+                        >(C) 1994-2026 QUEVEDO_SYS</span
+                    >
+                    <span class="opacity-50 crt-text-vibrate uppercase"
+                        >Est. 06/15/2026</span
+                    >
+                </div>
+                <div class="flex gap-6 items-center">
+                    <span
+                        class="flex items-center gap-1 crt-text-vibrate uppercase"
+                        ><span
+                            class="w-2 h-2 rounded-full bg-brand-blue animate-pulse"
+                        ></span>
+                        System_Online</span
+                    >
+                    <span class="opacity-40 crt-text-vibrate uppercase"
+                        >Lat: 29.76 N // Lon: 95.36 W</span
+                    >
+                </div>
+            </div>
+        </footer>
+        <!-- Audio Element -->
+        <audio id="rain-audio" loop="">
+            <source src="rain-on-forest-cabin.mp3" type="audio/mpeg" />
+        </audio>
+        <script>
+            const audioBtn = document.getElementById("audio-toggle");
+            const rainAudio = document.getElementById("rain-audio");
+            let isPlaying = false;
+
+            audioBtn.addEventListener("click", () => {
+                if (!isPlaying) {
+                    rainAudio
+                        .play()
+                        .catch((e) => console.error("Audio block:", e));
+                    audioBtn.innerHTML = `
+                    <span class="material-symbols-outlined text-[18px]">volume_off</span>
+                    <span class="font-label-caps text-label-caps crt-text-vibrate">SOUND_ON</span>
+                `;
+                    audioBtn.classList.add("bg-brand-blue", "text-white");
+                } else {
+                    rainAudio.pause();
+                    audioBtn.innerHTML = `
+                    <span class="material-symbols-outlined text-[18px]">volume_up</span>
+                    <span class="font-label-caps text-label-caps crt-text-vibrate">SOUND_OFF</span>
+                `;
+                    audioBtn.classList.remove("bg-brand-blue", "text-white");
+                }
+                isPlaying = !isPlaying;
+            });
+
+            // Dynamic Time in Houston (Texas)
+            function updateTexasTime() {
+                const now = new Date();
+                const texasTime = new Intl.DateTimeFormat("en-US", {
+                    timeZone: "America/Chicago",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    second: "2-digit",
+                    hour12: false,
+                }).format(now);
+                const timeEl = document.getElementById("texas-time");
+                if (timeEl) timeEl.innerText = "TX: " + texasTime;
+            }
+            setInterval(updateTexasTime, 1000);
+            updateTexasTime();
+
+            // Terminal Log Micro-interaction
+            console.log(
+                "%c > QUEVEDO_SYS INITIALIZED",
+                "color: #1e40af; font-weight: bold;",
+            );
+            console.log(
+                "%c > CONNECTION: SECURE_SSH_TUNNEL",
+                "color: #525866;",
+            );
+
+            // ── Rotating Quote ──────────────────────────────────────────
+            const QUOTES = [
+                { text: "The secret of getting ahead is getting started.", author: "Mark Twain" },
+                { text: "It does not matter how slowly you go as long as you do not stop.", author: "Confucius" },
+                { text: "Success is not final, failure is not fatal: it is the courage to continue that counts.", author: "Winston Churchill" },
+                { text: "Discipline is the bridge between goals and accomplishment.", author: "Jim Rohn" },
+                { text: "The more that you read, the more things you will know.", author: "Dr. Seuss" },
+                { text: "An investment in knowledge pays the best interest.", author: "Benjamin Franklin" },
+                { text: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
+                { text: "Hard work beats talent when talent doesn't work hard.", author: "Tim Notke" },
+                { text: "Do not wait to strike till the iron is hot, but make it hot by striking.", author: "William Butler Yeats" },
+                { text: "Strength does not come from physical capacity. It comes from an indomitable will.", author: "Mahatma Gandhi" },
+                { text: "The pain you feel today will be the strength you feel tomorrow.", author: "Arnold Schwarzenegger" },
+                { text: "Fall seven times, stand up eight.", author: "Japanese Proverb" },
+                { text: "The difference between a successful person and others is not a lack of strength, not a lack of knowledge, but rather a lack in will.", author: "Vince Lombardi" },
+                { text: "Price is what you pay. Value is what you get.", author: "Warren Buffett" },
+                { text: "Risk comes from not knowing what you're doing.", author: "Warren Buffett" },
+                { text: "The stock market is a device for transferring money from the impatient to the patient.", author: "Warren Buffett" },
+                { text: "In investing, what is comfortable is rarely profitable.", author: "Robert Arnott" },
+                { text: "The goal of education is not to increase the amount of knowledge but to create the possibilities for a child to invent and discover.", author: "Jean Piaget" },
+                { text: "A black belt is a white belt who never quit.", author: "Unknown" },
+                { text: "The fight is won or lost far away from witnesses — behind the lines, in the gym, and out there on the road.", author: "Muhammad Ali" },
+                { text: "Champions aren't made in gyms. Champions are made from something they have deep inside them.", author: "Muhammad Ali" },
+                { text: "The more I practice, the luckier I get.", author: "Gary Player" },
+            ];
+
+            let quoteIndex = Math.floor(Math.random() * QUOTES.length);
+            const quoteText = document.getElementById("quote-text");
+            const quoteAuthor = document.getElementById("quote-author");
+
+            function showQuote(idx) {
+                if (!quoteText || !quoteAuthor) return;
+                quoteText.style.opacity = "0";
+                quoteAuthor.style.opacity = "0";
+                setTimeout(() => {
+                    quoteText.textContent = "“" + QUOTES[idx].text + "”";
+                    quoteAuthor.textContent = "— " + QUOTES[idx].author;
+                    quoteText.style.opacity = "1";
+                    quoteAuthor.style.opacity = "1";
+                }, 700);
+            }
+
+            showQuote(quoteIndex);
+            setInterval(() => {
+                quoteIndex = (quoteIndex + 1) % QUOTES.length;
+                showQuote(quoteIndex);
+            }, 12000);
+
+            // ── Market Ticker (Finnhub) ──────────────────────────────────
+            const FINNHUB_KEY = "d8std01r01qh5revb050d8std01r01qh5revb05g";
+
+            function applyQuote(symbol, data) {
+                const price = data.c.toFixed(2);
+                const change = data.d;
+                const pct = data.dp;
+                const sign = change >= 0 ? "+" : "";
+                const color = change >= 0 ? "#1e40af" : "#ef4444";
+                const label = `${sign}${change.toFixed(2)} (${sign}${pct.toFixed(2)}%)`;
+                const id = symbol.toLowerCase();
+                document.getElementById(`${id}-price`).textContent = "$" + price;
+                const el = document.getElementById(`${id}-change`);
+                el.textContent = label;
+                el.style.color = color;
+            }
+
+            async function fetchTicker() {
+                try {
+                    const [nvdaRes, iauRes] = await Promise.all([
+                        fetch(`https://finnhub.io/api/v1/quote?symbol=NVDA&token=${FINNHUB_KEY}`),
+                        fetch(`https://finnhub.io/api/v1/quote?symbol=IAU&token=${FINNHUB_KEY}`)
+                    ]);
+                    const [nvda, iau] = await Promise.all([nvdaRes.json(), iauRes.json()]);
+                    applyQuote("nvda", nvda);
+                    applyQuote("iau", iau);
+                    const ts = document.getElementById("ticker-timestamp");
+                    if (ts) ts.textContent = "last updated " + new Date().toLocaleTimeString("en-US", { timeZone: "America/Chicago", hour: "2-digit", minute: "2-digit" }) + " CT";
+                } catch (e) {
+                    ["nvda-price", "iau-price"].forEach(id => document.getElementById(id).textContent = "N/A");
+                    const ts = document.getElementById("ticker-timestamp");
+                    if (ts) ts.textContent = "market data unavailable";
+                }
+            }
+
+            fetchTicker();
+            setInterval(fetchTicker, 60000);
+        </script>
+    </body>
+</html>
