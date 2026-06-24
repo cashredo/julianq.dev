@@ -152,7 +152,7 @@
   </div>
 
   <div id="message">Press any arrow key to start</div>
-  <div class="controls">Arrow keys · Move &nbsp;|&nbsp; R · Restart &nbsp;|&nbsp; P · Pause</div>
+  <div class="controls">Arrows · Move &nbsp;·&nbsp; R · Restart &nbsp;·&nbsp; Space · Pause</div>
 
   <div class="credit">
     made by <a href="https://github.com/cashredo/julianq.dev" target="_blank">julian quevedo ↗</a>
@@ -567,7 +567,7 @@
       if (ARROWS.includes(e.key)) e.preventDefault();
 
       if (e.key === 'r' || e.key === 'R') { resetGame(); return; }
-      if (e.key === 'p' || e.key === 'P') { togglePause(); return; }
+      if (e.key === ' ') { e.preventDefault(); togglePause(); return; }
 
       if (!ARROWS.includes(e.key)) return;
 
