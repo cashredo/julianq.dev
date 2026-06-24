@@ -870,15 +870,13 @@ void main() {
                                         class="w-8 h-8 flex items-center justify-center overflow-hidden"
                                     >
                                         <svg
+                                            id="moon-svg"
                                             height="32"
                                             viewbox="0 0 32 32"
                                             width="32"
                                             xmlns="http://www.w3.org/2000/svg"
                                         >
-                                            <path
-                                                d="M16 2 A 14 14 0 0 1 16 30 A 10 14 0 0 0 16 2 Z"
-                                                fill="#e2e2e2"
-                                            ></path>
+                                            <circle cx="16" cy="16" r="14" fill="#333"/>
                                         </svg>
                                     </div>
                                     <a
@@ -894,19 +892,19 @@ void main() {
                                     >Phase:</span
                                 >
                                 <span class="stat-value crt-text-vibrate"
-                                    >Waxing Crescent</span
+                                    id="moon-phase">—</span
                                 >
                                 <span class="stat-label crt-text-vibrate"
-                                    >Azimuth:</span
+                                    >Illumination:</span
                                 >
                                 <span class="stat-value crt-text-vibrate"
-                                    >211° 42' ∅</span
+                                    id="moon-illum">—</span
                                 >
                                 <span class="stat-label crt-text-vibrate"
-                                    >Altitude:</span
+                                    >Age:</span
                                 >
                                 <span class="stat-value crt-text-vibrate"
-                                    >68° 04' ▾</span
+                                    id="moon-age">—</span
                                 >
                                 <span class="stat-label crt-text-vibrate"
                                     >Texas:</span
@@ -1137,6 +1135,83 @@ void main() {
             }
             setInterval(updateTexasTime, 1000);
             updateTexasTime();
+
+            // ── Live Moon Phase ─────────────────────────────────────────
+            (function() {
+                const KNOWN_NEW_MOON = new Date('2000-01-06T18:14:00Z');
+                const CYCLE = 29.53058867;
+
+                function moonData() {
+                    const days = (Date.now() - KNOWN_NEW_MOON) / 86400000;
+                    const phase = ((days % CYCLE) + CYCLE) % CYCLE;
+                    const norm  = phase / CYCLE;
+                    const illum = (1 - Math.cos(2 * Math.PI * norm)) / 2;
+
+                    let name;
+                    if      (norm < 0.035) name = 'New Moon';
+                    else if (norm < 0.235) name = 'Waxing Crescent';
+                    else if (norm < 0.265) name = 'First Quarter';
+                    else if (norm < 0.475) name = 'Waxing Gibbous';
+                    else if (norm < 0.525) name = 'Full Moon';
+                    else if (norm < 0.735) name = 'Waning Gibbous';
+                    else if (norm < 0.765) name = 'Last Quarter';
+                    else if (norm < 0.965) name = 'Waning Crescent';
+                    else                   name = 'New Moon';
+
+                    return { phase, norm, illum, name };
+                }
+
+                function moonSVG(norm) {
+                    const r = 14, cx = 16, cy = 16;
+                    const top = cy - r, bot = cy + r;
+
+                    if (norm < 0.02 || norm > 0.98)
+                        return `<circle cx="${cx}" cy="${cy}" r="${r}" fill="#1a1a1a"/>`;
+                    if (norm > 0.48 && norm < 0.52)
+                        return `<circle cx="${cx}" cy="${cy}" r="${r}" fill="#e2e2e2"/>`;
+
+                    const waxing = norm < 0.5;
+                    const kx     = r * Math.cos(2 * Math.PI * norm);
+                    const akx    = Math.max(Math.abs(kx), 0.5);
+
+                    if (waxing) {
+                        if (kx >= 0) {
+                            // Waxing crescent: dark bg, lit sliver on right
+                            return `<circle cx="${cx}" cy="${cy}" r="${r}" fill="#1a1a1a"/>
+                                    <path d="M ${cx},${top} A ${r},${r} 0 0,1 ${cx},${bot} A ${akx},${r} 0 0,1 ${cx},${top} Z" fill="#e2e2e2"/>`;
+                        } else {
+                            // Waxing gibbous: lit bg, shadow sliver on left
+                            return `<circle cx="${cx}" cy="${cy}" r="${r}" fill="#e2e2e2"/>
+                                    <path d="M ${cx},${top} A ${r},${r} 0 0,0 ${cx},${bot} A ${akx},${r} 0 0,0 ${cx},${top} Z" fill="#1a1a1a"/>`;
+                        }
+                    } else {
+                        if (kx <= 0) {
+                            // Waning gibbous: lit bg, shadow sliver on right
+                            return `<circle cx="${cx}" cy="${cy}" r="${r}" fill="#e2e2e2"/>
+                                    <path d="M ${cx},${top} A ${r},${r} 0 0,1 ${cx},${bot} A ${akx},${r} 0 0,1 ${cx},${top} Z" fill="#1a1a1a"/>`;
+                        } else {
+                            // Waning crescent: dark bg, lit sliver on left
+                            return `<circle cx="${cx}" cy="${cy}" r="${r}" fill="#1a1a1a"/>
+                                    <path d="M ${cx},${top} A ${r},${r} 0 0,0 ${cx},${bot} A ${akx},${r} 0 0,0 ${cx},${top} Z" fill="#e2e2e2"/>`;
+                        }
+                    }
+                }
+
+                function updateMoon() {
+                    const { phase, norm, illum, name } = moonData();
+                    const svg = document.getElementById('moon-svg');
+                    if (svg) svg.innerHTML = moonSVG(norm);
+                    const phEl = document.getElementById('moon-phase');
+                    if (phEl) phEl.textContent = name;
+                    const ilEl = document.getElementById('moon-illum');
+                    if (ilEl) ilEl.textContent = (illum * 100).toFixed(0) + '%';
+                    const agEl = document.getElementById('moon-age');
+                    if (agEl) agEl.textContent = phase.toFixed(1) + ' days';
+                }
+
+                updateMoon();
+                setInterval(updateMoon, 60000);
+            })();
 
             // Terminal Log Micro-interaction
             console.log(
