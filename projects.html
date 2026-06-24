@@ -238,11 +238,15 @@
                     </a>
                     <span class="neon-pulse text-lg hidden sm:block">あきらめない</span>
                 </div>
-                <nav class="hidden md:flex gap-8">
+                <nav class="hidden md:flex gap-8 items-center">
                     <a class="text-primary/70 hover:text-brand-blue transition-colors crt-text-vibrate" href="index.html">HOME</a>
                     <a class="text-brand-blue border-b-2 border-brand-blue pb-1 crt-text-vibrate" href="projects.html">PROJECTS</a>
                     <a class="text-primary/70 hover:text-brand-blue transition-colors crt-text-vibrate" href="mailto:julian.quevedo.houston@gmail.com">EMAIL_ME</a>
+                    <button id="rain-btn" class="font-label-caps text-[10px] text-primary/50 hover:text-brand-blue border border-primary/30 hover:border-brand-blue px-3 py-1 crt-text-vibrate transition-colors" style="background:transparent;cursor:pointer;">
+                        🌧 RAIN
+                    </button>
                 </nav>
+                <audio id="rain-audio" src="rain-on-forest-cabin.mp3" loop preload="none"></audio>
                 <div class="text-[10px] text-primary/40 font-label-caps crt-text-vibrate hidden sm:block">
                     /projects
                 </div>
@@ -386,7 +390,7 @@
                         <div class="proj-card-incoming p-6">
                             <div class="flex items-start justify-between mb-4">
                                 <div>
-                                    <p class="font-label-caps text-[10px] text-red-500/35 crt-text-vibrate mb-1">&gt; ./classified/</p>
+                                    <p class="font-label-caps text-[10px] text-red-500/35 crt-text-vibrate mb-1">&gt; ./coming-soon/</p>
                                     <h2 class="font-headline-lg font-bold text-[22px] text-on-primary/50 crt-text-vibrate" id="glitch-title">
                                         ???_PROJECT.exe
                                     </h2>
@@ -456,6 +460,29 @@
         <div class="hello-world">hello world</div>
 
         <script>
+        // ── Rain toggle ─────────────────────────────────────────
+        (function() {
+            const btn   = document.getElementById('rain-btn');
+            const audio = document.getElementById('rain-audio');
+            let playing = false;
+            btn.addEventListener('click', () => {
+                if (!playing) {
+                    audio.volume = 0.5;
+                    audio.play();
+                    btn.textContent = '🌧 RAIN ON';
+                    btn.style.color = '#1e40af';
+                    btn.style.borderColor = '#1e40af';
+                } else {
+                    audio.pause();
+                    audio.currentTime = 0;
+                    btn.textContent = '🌧 RAIN';
+                    btn.style.color = '';
+                    btn.style.borderColor = '';
+                }
+                playing = !playing;
+            });
+        })();
+
         // ── Coming-soon card: glitch title + build bar ──────────
         (function() {
             const titleEl = document.getElementById('glitch-title');
