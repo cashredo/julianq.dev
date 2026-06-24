@@ -152,7 +152,7 @@
   </div>
 
   <div id="message">Press any arrow key to start</div>
-  <div class="controls">Arrow keys · Move &nbsp;|&nbsp; R · Restart</div>
+  <div class="controls">Arrow keys · Move &nbsp;|&nbsp; R · Restart &nbsp;|&nbsp; P · Pause</div>
 
   <div class="credit">
     made by <a href="https://github.com/cashredo/julianq.dev" target="_blank">julian quevedo ↗</a>
@@ -181,6 +181,7 @@
 
     let snake, dir, nextDir, food, score, running;
     let dead = false;
+    let paused = false;
     let loopInterval = null;
     let hiScore = parseInt(localStorage.getItem('snakeHi') || '0');
     let musicOn = true;
@@ -257,6 +258,7 @@
       score   = 0;
       running = false;
       dead    = false;
+      paused  = false;
 
       scoreEl.textContent = 'Score: 0';
       msgEl.textContent   = 'Press any arrow key to start';
@@ -505,8 +507,37 @@
       }
     }
 
+    function drawPauseOverlay() {
+      ctx.fillStyle = 'rgba(0,0,0,0.45)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#5ecc55';
+      ctx.font = 'bold 18px "Fredoka One", cursive';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('PAUSED', canvas.width / 2, canvas.height / 2 - 12);
+      ctx.font = '13px "Fredoka One", cursive';
+      ctx.fillStyle = '#3d8b37';
+      ctx.fillText('press P to continue', canvas.width / 2, canvas.height / 2 + 14);
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'alphabetic';
+    }
+
+    function togglePause() {
+      if (!running || dead) return;
+      paused = !paused;
+      if (paused) {
+        bgMusic.pause();
+        drawPauseOverlay();
+        msgEl.textContent = 'Paused';
+      } else {
+        if (musicOn) bgMusic.play().catch(() => {});
+        drawEverything();
+        msgEl.textContent = '';
+      }
+    }
+
     function gameLoop() {
-      if (!running) return;
+      if (!running || paused) return;
       moveSnake();
       drawEverything();
     }
@@ -536,6 +567,7 @@
       if (ARROWS.includes(e.key)) e.preventDefault();
 
       if (e.key === 'r' || e.key === 'R') { resetGame(); return; }
+      if (e.key === 'p' || e.key === 'P') { togglePause(); return; }
 
       if (!ARROWS.includes(e.key)) return;
 
