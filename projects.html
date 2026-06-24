@@ -1,0 +1,348 @@
+<!doctype html>
+<html class="dark" lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <title>PROJECTS // JULIAN_QUEVEDO</title>
+        <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=JetBrains+Mono:wght@400;500&family=Space+Mono:wght@400;700&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+            rel="stylesheet"
+        />
+        <script id="tailwind-config">
+            tailwind.config = {
+                darkMode: "class",
+                theme: {
+                    extend: {
+                        colors: {
+                            "brand-blue": "#1e40af",
+                            primary: "#525866",
+                            "on-primary": "#e2e2e2",
+                            "on-surface": "#e2e2e2",
+                            "on-surface-variant": "#b0b5be",
+                            "outline-variant": "#3d4148",
+                            surface: "#121414",
+                            background: "#000000",
+                        },
+                        borderRadius: {
+                            DEFAULT: "0px",
+                            lg: "0px",
+                            xl: "0px",
+                            full: "0px",
+                        },
+                        spacing: {
+                            gutter: "16px",
+                            "container-max-width": "1100px",
+                            "window-padding": "20px",
+                        },
+                        fontFamily: {
+                            "headline-lg": ["Space Grotesk"],
+                            "body-sm": ["JetBrains Mono"],
+                            "body-md": ["JetBrains Mono"],
+                            "label-caps": ["Space Mono"],
+                        },
+                    },
+                },
+            };
+        </script>
+        <style>
+            body {
+                background-color: #000000;
+                background-image: url('bg.png');
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center top;
+                background-attachment: fixed;
+                color: #1e40af;
+                overflow-x: hidden;
+                font-family: "JetBrains Mono", monospace;
+                cursor: crosshair;
+            }
+
+            @keyframes crt-vibrate {
+                0%, 95% { transform: translate(0, 0); }
+                96% { transform: translate(-0.5px, 0.5px); }
+                97% { transform: translate(0.5px, -0.5px); }
+                98% { transform: translate(0.5px, 0.5px); }
+                100% { transform: translate(0, 0); }
+            }
+            .crt-text-vibrate {
+                animation: crt-vibrate 4s infinite;
+                text-shadow: 1px 0 1px rgba(168,85,247,.2), -1px 0 1px rgba(30,64,175,.2);
+            }
+
+            @keyframes neon-pulse {
+                0%, 100% { opacity:1; text-shadow:0 0 6px rgba(82,88,102,.6); color:#6b7280; }
+                50% { opacity:.85; text-shadow:0 0 4px rgba(30,64,175,.5); color:#1e40af; }
+            }
+            .neon-pulse { animation: neon-pulse 3s infinite ease-in-out; display:inline-block; }
+
+            .terminal-window {
+                border: 1px solid #525866;
+                background: rgba(0,0,0,0.98);
+            }
+            .hard-shadow { box-shadow: 8px 8px 0px #525866; }
+
+            .scanline {
+                width:100%; height:2px; background:rgba(30,64,175,.05);
+                position:fixed; top:0; left:0; z-index:100; pointer-events:none;
+                animation: scanline 10s linear infinite;
+            }
+            @keyframes scanline { 0%{top:0} 100%{top:100%} }
+
+            .ascii-divider {
+                border-bottom: 1px dashed #525866;
+                width:100%; margin:1.5rem 0; opacity:.5;
+            }
+
+            /* Project cards */
+            .proj-card {
+                border: 1px solid #525866;
+                background: rgba(5,5,15,0.9);
+                transition: border-color .2s, box-shadow .2s;
+                position: relative;
+                overflow: hidden;
+            }
+            .proj-card::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(135deg, rgba(30,64,175,.04) 0%, transparent 60%);
+                pointer-events: none;
+            }
+            .proj-card:hover {
+                border-color: #1e40af;
+                box-shadow: 4px 4px 0px #1e40af;
+            }
+            .proj-card-link {
+                display: block;
+                text-decoration: none;
+                color: inherit;
+            }
+
+            .proj-status-live {
+                background: rgba(30,64,175,.15);
+                border: 1px solid #1e40af;
+                color: #1e40af;
+            }
+            .proj-status-wip {
+                background: rgba(82,88,102,.1);
+                border: 1px solid #525866;
+                color: #525866;
+            }
+
+            .tag {
+                display: inline-block;
+                border: 1px solid rgba(82,88,102,.4);
+                font-size: 9px;
+                letter-spacing: .1em;
+                padding: 2px 6px;
+                color: #525866;
+                text-transform: uppercase;
+            }
+            .tag-blue {
+                border-color: rgba(30,64,175,.5);
+                color: #1e40af;
+            }
+
+            .hello-world {
+                position: fixed; bottom: 5px; left: 5px;
+                font-size: 10px; opacity: .3;
+                font-family: "Space Mono", monospace; z-index: 99;
+            }
+
+            #bg-shader-container {
+                position: fixed; top:0; left:0;
+                width:100%; height:100%;
+                z-index:-1; pointer-events:none;
+            }
+
+            @keyframes blink { 50%{opacity:0} }
+            .cursor-blink {
+                display:inline-block; width:8px; height:1.2em;
+                background-color:#1e40af;
+                animation:blink 1s step-end infinite;
+                vertical-align:middle;
+            }
+        </style>
+    </head>
+    <body class="flex flex-col min-h-screen">
+        <div class="scanline"></div>
+
+        <!-- Rain shader (same as index.html) -->
+        <div id="bg-shader-container">
+            <canvas id="shader-canvas" style="display:block;width:100%;height:100%"></canvas>
+            <script>
+            (function(){
+                const canvas=document.getElementById('shader-canvas');
+                function syncSize(){const w=canvas.clientWidth||1280,h=canvas.clientHeight||720;if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}}
+                if(typeof ResizeObserver!=='undefined')new ResizeObserver(syncSize).observe(canvas);
+                syncSize();
+                const gl=canvas.getContext('webgl',{alpha:true,premultipliedAlpha:false})||canvas.getContext('experimental-webgl',{alpha:true,premultipliedAlpha:false});
+                if(!gl)return;
+                const vs=`attribute vec2 a_position;varying vec2 v_texCoord;void main(){v_texCoord=a_position*.5+.5;gl_Position=vec4(a_position,0,1);}`;
+                const fs=`precision highp float;varying vec2 v_texCoord;uniform float u_time;uniform vec2 u_resolution;
+                float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453123);}
+                void main(){vec2 uv=v_texCoord;vec2 rainUV=uv;rainUV.y+=u_time*1.8;
+                vec2 grid=vec2(130,30);vec2 ipos=floor(rainUV*grid);vec2 fpos=fract(rainUV*grid);
+                float h=hash(ipos);float drop=0.;
+                if(h>.85){float line=smoothstep(.05,.0,abs(fpos.x-.5));float fade=smoothstep(0.,.25,fpos.y)*smoothstep(1.,.65,fpos.y);drop=line*fade*h;}
+                float splash=0.;if(uv.y<.04){float sHash=hash(vec2(floor(uv.x*70.),floor(u_time*15.)));if(sHash>.86){vec2 sPos=fract(vec2(uv.x*70.,uv.y*25.));splash=smoothstep(.35,.0,length(sPos-.5))*sHash;}}
+                vec3 topColor=vec3(.55,.72,1.),bottomColor=vec3(.92,.94,.97);vec3 dropColor=mix(topColor,bottomColor,fpos.y);
+                vec3 rainColor=dropColor*(drop+splash);float mist=hash(uv+u_time*.008)*.025;rainColor+=vec3(.65,.68,.72)*mist;
+                float alpha=clamp((drop+splash)*5.5+mist*1.5,0.,.88);gl_FragColor=vec4(rainColor,alpha);}`;
+                function cs(t,s){const sh=gl.createShader(t);gl.shaderSource(sh,s);gl.compileShader(sh);return sh;}
+                const prog=gl.createProgram();gl.attachShader(prog,cs(gl.VERTEX_SHADER,vs));gl.attachShader(prog,cs(gl.FRAGMENT_SHADER,fs));gl.linkProgram(prog);gl.useProgram(prog);
+                const buf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buf);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
+                const pos=gl.getAttribLocation(prog,'a_position');gl.enableVertexAttribArray(pos);gl.vertexAttribPointer(pos,2,gl.FLOAT,false,0,0);
+                const uTime=gl.getUniformLocation(prog,'u_time'),uRes=gl.getUniformLocation(prog,'u_resolution');
+                function render(t){if(typeof ResizeObserver==='undefined')syncSize();gl.viewport(0,0,canvas.width,canvas.height);if(uTime)gl.uniform1f(uTime,t*.001);if(uRes)gl.uniform2f(uRes,canvas.width,canvas.height);gl.drawArrays(gl.TRIANGLE_STRIP,0,4);requestAnimationFrame(render);}
+                render(0);
+            })();
+            </script>
+        </div>
+
+        <!-- Nav -->
+        <header class="bg-black/80 text-brand-blue font-body-md w-full border-b border-primary/40 z-40 sticky top-0 backdrop-blur-sm">
+            <div class="flex justify-between items-center px-window-padding h-14 w-full max-w-container-max-width mx-auto">
+                <div class="flex items-center gap-4">
+                    <a href="index.html" class="font-headline-lg text-primary uppercase tracking-tighter crt-text-vibrate hover:text-brand-blue transition-colors text-[16px] font-bold">
+                        JULIAN_QUEVEDO_V1.0
+                    </a>
+                    <span class="neon-pulse text-lg hidden sm:block">あきらめない</span>
+                </div>
+                <nav class="hidden md:flex gap-8">
+                    <a class="text-primary/70 hover:text-brand-blue transition-colors crt-text-vibrate" href="index.html">HOME</a>
+                    <a class="text-brand-blue border-b-2 border-brand-blue pb-1 crt-text-vibrate" href="projects.html">PROJECTS</a>
+                    <a class="text-primary/70 hover:text-brand-blue transition-colors crt-text-vibrate" href="mailto:julian.quevedo.houston@gmail.com">EMAIL_ME</a>
+                </nav>
+                <div class="text-[10px] text-primary/40 font-label-caps crt-text-vibrate hidden sm:block">
+                    /projects
+                </div>
+            </div>
+        </header>
+
+        <main class="flex-grow w-full max-w-container-max-width mx-auto px-gutter py-12 relative z-10">
+            <div class="terminal-window hard-shadow w-full">
+                <!-- Terminal title bar -->
+                <div class="flex justify-between items-center bg-primary text-on-primary px-4 py-1.5 border-b border-primary">
+                    <span class="font-label-caps text-[11px] crt-text-vibrate">PROJECTS.EXE — QUEVEDO_SYS</span>
+                    <div class="flex gap-4 opacity-80">
+                        <span class="font-label-caps text-label-caps cursor-pointer hover:opacity-100">[ _ ]</span>
+                        <span class="font-label-caps text-label-caps cursor-pointer hover:opacity-100">[ □ ]</span>
+                        <a href="index.html" class="font-label-caps text-label-caps hover:opacity-100 text-on-primary no-underline">[ X ]</a>
+                    </div>
+                </div>
+
+                <div class="p-window-padding space-y-8">
+                    <!-- Header -->
+                    <section>
+                        <p class="font-body-sm text-[11px] text-primary/50 crt-text-vibrate mb-1">&gt; ls ./projects</p>
+                        <h1 class="font-headline-lg font-bold text-[36px] leading-none text-brand-blue neon-pulse mb-2">
+                            Projects<span class="cursor-blink ml-1"></span>
+                        </h1>
+                        <p class="font-body-sm text-[12px] text-primary/60 crt-text-vibrate">
+                            Things I've built — finance, tools, experiments.
+                        </p>
+                        <div class="ascii-divider"></div>
+                    </section>
+
+                    <!-- Project grid -->
+                    <section class="space-y-4">
+                        <div class="flex items-center gap-2 mb-6">
+                            <span class="text-brand-blue font-headline-lg font-bold text-lg uppercase crt-text-vibrate">↓ [Active]</span>
+                            <div class="h-[1px] flex-grow bg-primary opacity-20"></div>
+                        </div>
+
+                        <!-- Options Visualizer Card -->
+                        <a href="https://optionsvisualizer.netlify.app" target="_blank" class="proj-card-link">
+                            <div class="proj-card p-6 group">
+                                <div class="flex items-start justify-between mb-4">
+                                    <div>
+                                        <p class="font-label-caps text-[10px] text-primary/40 crt-text-vibrate mb-1">&gt; ./finance/</p>
+                                        <h2 class="font-headline-lg font-bold text-[22px] text-on-primary group-hover:text-brand-blue transition-colors crt-text-vibrate">
+                                            BLACK_SCHOLES.exe
+                                        </h2>
+                                    </div>
+                                    <span class="proj-status-live font-label-caps text-[9px] px-2 py-1 crt-text-vibrate uppercase">● Live</span>
+                                </div>
+
+                                <p class="font-body-sm text-[12px] text-primary/70 leading-relaxed mb-5 crt-text-vibrate">
+                                    Interactive Black–Scholes options pricing model built from scratch.
+                                    Input any stock price, strike, expiry, and IV — get live call/put prices
+                                    and all five Greeks (Δ Γ Θ ν ρ) with real-time charts and a Finnhub
+                                    live-quote ticker lookup.
+                                </p>
+
+                                <div class="flex flex-wrap gap-2 mb-5">
+                                    <span class="tag tag-blue">Vanilla JS</span>
+                                    <span class="tag tag-blue">Black–Scholes</span>
+                                    <span class="tag tag-blue">Chart.js</span>
+                                    <span class="tag tag-blue">WebGL</span>
+                                    <span class="tag tag-blue">Finnhub API</span>
+                                    <span class="tag">Finance</span>
+                                </div>
+
+                                <div class="flex items-center gap-2 text-brand-blue text-[11px] font-body-sm crt-text-vibrate group-hover:opacity-100 opacity-60 transition-opacity">
+                                    <span>Open project</span>
+                                    <span>↗</span>
+                                </div>
+                            </div>
+                        </a>
+
+                        <!-- Placeholder card -->
+                        <div class="proj-card p-6 opacity-30 cursor-not-allowed select-none">
+                            <div class="flex items-start justify-between mb-3">
+                                <div>
+                                    <p class="font-label-caps text-[10px] text-primary/40 mb-1">&gt; ./???/</p>
+                                    <h2 class="font-headline-lg font-bold text-[22px] text-primary">NEXT_PROJECT.exe</h2>
+                                </div>
+                                <span class="proj-status-wip font-label-caps text-[9px] px-2 py-1 uppercase">○ Soon</span>
+                            </div>
+                            <p class="font-body-sm text-[12px] text-primary/50 leading-relaxed">
+                                In progress...
+                            </p>
+                        </div>
+                    </section>
+
+                    <div class="ascii-divider"></div>
+
+                    <div class="flex items-center justify-between">
+                        <p class="font-body-sm text-[11px] text-primary/30 crt-text-vibrate">
+                            1 project deployed &nbsp;·&nbsp; 1 in queue
+                        </p>
+                        <a href="https://github.com/cashredo" target="_blank"
+                           class="font-label-caps text-[10px] text-brand-blue hover:text-on-primary transition-colors crt-text-vibrate uppercase">
+                            GitHub ↗
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <div class="fixed bottom-2 right-4 text-[8px] opacity-30 text-primary font-mono crt-text-vibrate z-50 leading-tight">
+            /\_/\<br />( o.o )<br />&gt; ^ &lt;<br />meow_
+        </div>
+        <div class="hello-world">hello world</div>
+
+        <footer class="bg-black text-brand-blue font-label-caps text-[11px] w-full border-t border-primary/30 mt-auto py-4">
+            <div class="flex justify-between items-center px-window-padding w-full max-w-container-max-width mx-auto">
+                <div class="flex gap-4">
+                    <span class="crt-text-vibrate">(C) 1994-2026 QUEVEDO_SYS</span>
+                    <span class="opacity-50 crt-text-vibrate uppercase">Est. 06/15/2026</span>
+                </div>
+                <div class="flex gap-6 items-center">
+                    <span class="flex items-center gap-1 crt-text-vibrate uppercase">
+                        <span class="w-2 h-2 rounded-full bg-brand-blue animate-pulse"></span>
+                        System_Online
+                    </span>
+                    <span class="opacity-40 crt-text-vibrate uppercase">Lat: 29.76 N // Lon: 95.36 W</span>
+                </div>
+            </div>
+        </footer>
+    </body>
+</html>
