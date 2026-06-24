@@ -168,6 +168,29 @@
                 animation:blink 1s step-end infinite;
                 vertical-align:middle;
             }
+
+            @keyframes border-bleed {
+                0%,100% { border-color: rgba(220,38,38,.25); box-shadow: none; }
+                50%      { border-color: rgba(220,38,38,.6);  box-shadow: 0 0 10px rgba(220,38,38,.12); }
+            }
+            .proj-card-incoming {
+                border: 1px solid rgba(220,38,38,.25);
+                background: rgba(5,5,15,0.9);
+                position: relative; overflow: hidden;
+                animation: border-bleed 2.8s ease-in-out infinite;
+            }
+            .proj-card-incoming::before {
+                content: '';
+                position: absolute; inset: 0;
+                background: linear-gradient(135deg, rgba(220,38,38,.03) 0%, transparent 60%);
+                pointer-events: none;
+            }
+            @keyframes spin-slow { to { transform: rotate(360deg); } }
+            .spin-slow { display:inline-block; animation: spin-slow 2s linear infinite; }
+            .redact {
+                display:inline-block; background: rgba(82,88,102,.18);
+                height: 10px; border-radius: 0;
+            }
         </style>
     </head>
     <body class="flex flex-col min-h-screen">
@@ -359,13 +382,64 @@
                                 </div>
                             </div>
                         </a>
+                        <!-- Coming Soon Card -->
+                        <div class="proj-card-incoming p-6">
+                            <div class="flex items-start justify-between mb-4">
+                                <div>
+                                    <p class="font-label-caps text-[10px] text-red-500/35 crt-text-vibrate mb-1">&gt; ./classified/</p>
+                                    <h2 class="font-headline-lg font-bold text-[22px] text-on-primary/50 crt-text-vibrate" id="glitch-title">
+                                        ???_PROJECT.exe
+                                    </h2>
+                                </div>
+                                <span class="font-label-caps text-[9px] px-2 py-1 crt-text-vibrate"
+                                      style="border:1px solid rgba(220,38,38,.4); color:rgba(220,38,38,.6); background:rgba(220,38,38,.05)">
+                                    <span class="spin-slow">⟳</span> BUILDING
+                                </span>
+                            </div>
+
+                            <!-- Redacted description lines -->
+                            <div class="mb-5 space-y-2.5">
+                                <div class="flex gap-2 items-center">
+                                    <span class="redact" style="width:52%"></span>
+                                    <span class="redact" style="width:30%"></span>
+                                </div>
+                                <div class="flex gap-2 items-center">
+                                    <span class="redact" style="width:25%"></span>
+                                    <span class="redact" style="width:42%"></span>
+                                    <span class="redact" style="width:18%"></span>
+                                </div>
+                                <div class="flex gap-2 items-center">
+                                    <span class="redact" style="width:60%"></span>
+                                    <span class="redact" style="width:22%"></span>
+                                </div>
+                            </div>
+
+                            <!-- Redacted tags -->
+                            <div class="flex flex-wrap gap-2 mb-5">
+                                <span class="tag opacity-25">████████</span>
+                                <span class="tag opacity-25">████████</span>
+                                <span class="tag opacity-25">████</span>
+                            </div>
+
+                            <!-- Build progress bar -->
+                            <div class="space-y-1.5">
+                                <div class="flex justify-between font-label-caps text-[9px] text-primary/30 crt-text-vibrate">
+                                    <span>BUILD PROGRESS</span>
+                                    <span id="build-pct">0%</span>
+                                </div>
+                                <div class="h-1 w-full" style="background:rgba(82,88,102,.1); border:1px solid rgba(82,88,102,.2)">
+                                    <div id="build-bar" style="height:100%; width:0%; background:rgba(220,38,38,.45); transition:width .15s linear;"></div>
+                                </div>
+                            </div>
+                        </div>
+
                     </section>
 
                     <div class="ascii-divider"></div>
 
                     <div class="flex items-center justify-between">
                         <p class="font-body-sm text-[11px] text-primary/30 crt-text-vibrate">
-                            3 projects deployed
+                            3 deployed &nbsp;·&nbsp; 1 building
                         </p>
                         <a href="https://github.com/cashredo" target="_blank"
                            class="font-label-caps text-[10px] text-brand-blue hover:text-on-primary transition-colors crt-text-vibrate uppercase">
@@ -380,6 +454,43 @@
             /\_/\<br />( o.o )<br />&gt; ^ &lt;<br />meow_
         </div>
         <div class="hello-world">hello world</div>
+
+        <script>
+        // ── Coming-soon card: glitch title + build bar ──────────
+        (function() {
+            const titleEl = document.getElementById('glitch-title');
+            const barEl   = document.getElementById('build-bar');
+            const pctEl   = document.getElementById('build-pct');
+            if (!titleEl || !barEl) return;
+
+            const GLITCH_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&*!?';
+            const BASE = '???_PROJECT.exe';
+
+            // Occasional title glitch
+            setInterval(() => {
+                if (Math.random() > 0.55) return;
+                let g = '';
+                for (let i = 0; i < BASE.length; i++) {
+                    if (BASE[i] !== '_' && BASE[i] !== '.' && Math.random() > 0.5)
+                        g += GLITCH_CHARS[Math.floor(Math.random() * GLITCH_CHARS.length)];
+                    else g += BASE[i];
+                }
+                titleEl.textContent = g;
+                setTimeout(() => titleEl.textContent = BASE, 90);
+            }, 700);
+
+            // Build bar: crawls to a random stall point, pauses, then ticks forward
+            const target = 47 + Math.floor(Math.random() * 30); // 47–76%
+            let progress = 0;
+            const tick = setInterval(() => {
+                const step = Math.random() < 0.15 ? 0 : (Math.random() * 1.8 + 0.2);
+                progress = Math.min(progress + step, target);
+                barEl.style.width = progress.toFixed(1) + '%';
+                pctEl.textContent = Math.floor(progress) + '%';
+                if (progress >= target) clearInterval(tick);
+            }, 180);
+        })();
+        </script>
 
         <footer class="bg-black text-brand-blue font-label-caps text-[11px] w-full border-t border-primary/30 mt-auto py-4">
             <div class="flex justify-between items-center px-window-padding w-full max-w-container-max-width mx-auto">
